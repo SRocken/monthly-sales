@@ -1,11 +1,12 @@
 # reporter.py
 
-import pandas
+import pandas as pd
+import numpy as np
 import os
 
 csv_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "sales-201710.csv")
 
-df = pandas.read_csv(csv_filepath)
+df = pd.read_csv(csv_filepath)
 
 sales = df.to_dict("records")
 
@@ -33,10 +34,9 @@ print(" ")
 print("Total Sales: " + str(total_sales))
 print(" ")
 
-grouped = df.groupby(['product']).sum()
+print("Top Selling Products:")
 
-top_three = grouped.nlargest(3, "sales price")
-
-print(str(top_three))
-
-
+sales = pd.read_csv(csv_filepath)
+grouped = sales.groupby("product").sum()
+top_products = grouped.nlargest(1000, "sales price")
+print(top_products[['sales price']])
